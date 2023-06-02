@@ -6,7 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 from settings import Config
 
 ALLOWED_CHARACTERS = ascii_lowercase + ascii_uppercase + digits
-BASE_URL = 'http://127.0.0.1:5000/'
+BASE_URL = 'http://localhost/'
 
 app = Flask(__name__)
 app.config.from_object(Config)

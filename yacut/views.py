@@ -8,9 +8,8 @@ from .models import URLMap
 
 
 def gen_short_id():
-    short_id_length = random.choice(range(1, 17))
     return ''.join([
-        random.choice(ALLOWED_CHARACTERS) for _ in range(short_id_length)
+        random.choice(ALLOWED_CHARACTERS) for _ in range(6)
     ])
 
 
@@ -24,8 +23,12 @@ def get_unique_short_id():
 @app.route('/', methods=['GET', 'POST'])
 def index_view():
     form = URLForm()
+
     if form.validate_on_submit():
-        short_id = form.short.data
+        short_id = form.custom_id.data
+
+        if short_id is None:
+            short_id = get_unique_short_id()
 
         for symbol in short_id:
             if symbol not in ALLOWED_CHARACTERS:
@@ -40,7 +43,7 @@ def index_view():
             short_id = get_unique_short_id()
 
         short_id_object = URLMap(
-            original=form.original.data,
+            original=form.original_link.data,
             short=short_id
         )
         db.session.add(short_id_object)
@@ -52,7 +55,7 @@ def index_view():
     return render_template('index.html', form=form)
 
 
-@app.route('/<string:short>/')
+@app.route('/<string:short>', methods=['GET'])
 def short_link_redirect(short):
     original = URLMap.query.filter_by(short=short).first_or_404().original
     return redirect(original)

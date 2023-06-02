@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from yacut import db
+from . import BASE_URL
 
 
 class URLMap(db.Model):
@@ -11,10 +12,8 @@ class URLMap(db.Model):
 
     def to_dict(self):
         return dict(
-            id=self.id,
-            original=self.original,
-            short=self.short,
-            timestamp=self.timestamp,
+            url=self.original,
+            short_link=BASE_URL + self.short,
         )
 
     def from_dict(self, data):
