@@ -2,10 +2,11 @@ from http import HTTPStatus
 
 from flask import jsonify, request
 
-from yacut import ALLOWED_CHARACTERS, app, db
+from yacut import app, db
+from .constants import ALLOWED_CHARACTERS, BASE_URL, MAXIMUM_LENGTH
 from .error_handlers import InvalidAPIUsage
 from .models import URLMap
-from .views import get_unique_short_id
+from .utils import get_unique_short_id
 
 
 @app.route('/api/id/', methods=['POST'])
@@ -26,7 +27,7 @@ def get_short_link():
 
     if URLMap.query.filter_by(short=short_id).first() is not None:
         raise InvalidAPIUsage(f'Имя "{short_id}" уже занято.')
-    if len(short_id) > 16:
+    if len(short_id) > MAXIMUM_LENGTH:
         raise invalid_name
     for symbol in short_id:
         if symbol not in ALLOWED_CHARACTERS:

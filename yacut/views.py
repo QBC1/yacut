@@ -1,23 +1,10 @@
-import random
-
 from flask import flash, redirect, render_template
 
-from yacut import ALLOWED_CHARACTERS, BASE_URL, app, db
+from yacut import app, db
+from .constants import ALLOWED_CHARACTERS, BASE_URL
 from .forms import URLForm
 from .models import URLMap
-
-
-def gen_short_id():
-    return ''.join([
-        random.choice(ALLOWED_CHARACTERS) for _ in range(6)
-    ])
-
-
-def get_unique_short_id():
-    short_id = gen_short_id()
-    while URLMap.query.filter_by(short=short_id).first():
-        short_id = gen_short_id()
-    return short_id
+from .utils import get_unique_short_id
 
 
 @app.route('/', methods=['GET', 'POST'])

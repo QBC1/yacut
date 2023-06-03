@@ -1,12 +1,7 @@
-from string import ascii_lowercase, ascii_uppercase, digits
-
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 from settings import Config
-
-ALLOWED_CHARACTERS = ascii_lowercase + ascii_uppercase + digits
-BASE_URL = 'http://localhost/'
 
 app = Flask(__name__)
 app.config.from_object(Config)

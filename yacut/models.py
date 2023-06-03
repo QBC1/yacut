@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from yacut import db
-from . import BASE_URL
+from .constants import BASE_URL
 
 
 class URLMap(db.Model):
@@ -17,5 +17,5 @@ class URLMap(db.Model):
         )
 
     def from_dict(self, data):
-        setattr(self, 'original', data['url'])
-        setattr(self, 'short', data['custom_id'])
+        self.original = data['url']
+        self.short = data['custom_id']
