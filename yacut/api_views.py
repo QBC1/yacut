@@ -3,7 +3,7 @@ from http import HTTPStatus
 from flask import jsonify, request
 
 from yacut import app, db
-from .constants import ALLOWED_CHARACTERS, BASE_URL, MAXIMUM_LENGTH
+from .constants import ALLOWED_CHARACTERS, MAXIMUM_LENGTH
 from .error_handlers import InvalidAPIUsage
 from .models import URLMap
 from .utils import get_unique_short_id
